@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.oracle.com/soa/fp/governance/auditor" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ValidatorResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Header">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="SourceDirectory"/>
+              <xs:element type="xs:string" name="SourceDirectoryMask"/>
+              <xs:element type="xs:string" name="DisplayLabel"/>
+              <xs:element type="xs:string" name="AssertionCatalog"/>
+              <xs:element type="xs:string" name="PoliciesFile"/>
+              <xs:element type="xs:string" name="Policy"/>
+              <xs:element type="xs:string" name="DateTime"/>
+              <xs:element type="xs:string" name="Version"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PolicyResult" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AssertionResult" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="Message"/>
+                    <xs:element type="xs:string" name="Result"/>
+                    <xs:element name="ExecutionDetails">
+                      <xs:complexType>
+                        <xs:choice maxOccurs="unbounded" minOccurs="0">
+                          <xs:element name="Composite">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Execution" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="ArtifactLocation">
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="xs:byte" name="line" use="optional"/>
+                                              <xs:attribute type="xs:short" name="col" use="optional"/>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element type="xs:string" name="ActualMessage"/>
+                                      <xs:element type="xs:string" name="ExpectedMessage"/>
+                                      <xs:element type="xs:string" name="Stack"/>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:byte" name="status" use="optional"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute type="xs:string" name="name" use="optional"/>
+                              <xs:attribute type="xs:string" name="version" use="optional"/>
+                              <xs:attribute type="xs:byte" name="success" use="optional"/>
+                              <xs:attribute type="xs:byte" name="failed" use="optional"/>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="Stack"/>
+                        </xs:choice>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:byte" name="priority" use="optional"/>
+                  <xs:attribute type="xs:string" name="name" use="optional"/>
+                  <xs:attribute type="xs:string" name="category" use="optional"/>
+                  <xs:attribute type="xs:byte" name="failed" use="optional"/>
+                  <xs:attribute type="xs:byte" name="total" use="optional"/>
+                  <xs:attribute type="xs:byte" name="success" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="LinkedTestSuites" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="Depends" maxOccurs="unbounded" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="name" use="optional"/>
+            <xs:attribute type="xs:byte" name="total" use="optional"/>
+            <xs:attribute type="xs:byte" name="failed" use="optional"/>
+            <xs:attribute type="xs:byte" name="success" use="optional"/>
+            <xs:attribute type="xs:byte" name="notExecuted" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

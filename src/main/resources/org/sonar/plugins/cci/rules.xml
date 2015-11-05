@@ -1,0 +1,1755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns:aud="http://www.oracle.com/soa/fp/governance/auditor">
+	<rule>
+		<key>com.oracle.cci.CAVSRoutingForEveryOperationsInMediatorCheck</key>
+		<severity>MAJOR</severity>
+		<name>CAVSRoutingForEveryOperationsInMediatorCheck</name>
+		<internalKey>CAVSRoutingForEveryOperationsInMediatorCheck</internalKey>
+		<description>Every operation defined in Mediator Service should have a corresponding CAVS routing rule defined.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalEBSPLinkWSDLCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalEBSPLinkWSDLCheck</name>
+		<internalKey>NoLocalEBSPLinkWSDLCheck</internalKey>
+		<description>Wsdl file for ABCS partner link to Mediator should be located in AIAComponents folder. It should not be local.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ExtensionStandardPatternCheck2</key>
+		<severity>MAJOR</severity>
+		<name>ExtensionStandardPatternCheck2</name>
+		<internalKey>ExtensionStandardPatternCheck2</internalKey>
+		<description>ABCS Extension enablement should follow standard code pattern Assign-Invoke-Assign. For extension enablement there should be a switch activity that decides whether particular extension process should be invoked. Having a configuration property for the extension invoke in AIAConfigurationsProperties XML does this. So the switch to check if this property is set to true decides whether invocation of extension service should go through. Sample Switch activity: aia:getServiceProperty('{ProcessNamespace}ProcessName,'ABCSExtension.ConfigPropertyName',(false|true)())='true'. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.MaxExtPointsInSyncMEPCheck</key>
+		<severity>MAJOR</severity>
+		<name>MaxExtPointsInSyncMEPCheck</name>
+		<internalKey>MaxExtPointsInSyncMEPCheck</internalKey>
+		<description>All BPEL processes which follow SYNC Request Response pattern should not have more than 6 extension points</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TXNEnableInAsyncFFMEPABCSCheck</key>
+		<severity>MAJOR</severity>
+		<name>TXNEnableInAsyncFFMEPABCSCheck</name>
+		<internalKey>TXNEnableInAsyncFFMEPABCSCheck</internalKey>
+		<description>This check is for all ABCSImpl that follow Async Fire and forget MEP. Process level configurations are required to ensure the instance rollback and bypassing the dehydration store. Set configurations level property 'oneWayDeliveryPolicy' to 'sync' in composite.xml</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ExtServicePlinkRuntimeLocCheck</key>
+		<severity>MAJOR</severity>
+		<name>ExtServicePlinkRuntimeLocCheck</name>
+		<internalKey>ExtServicePlinkRuntimeLocCheck</internalKey>
+		<description>All ABCS processes should have a partnerlink defined for extension enablement. binding.ws property set in the composite.xml for this partnerlink should not be a local file. i.e., Extension concrete wsdl should not exist in the process folder. Note that name of the partnerlink should be {processName}Extension. The runtime location should point to a oramds store location.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ProvABCSResponseEBSInvokeSwitchCheck</key>
+		<severity>MAJOR</severity>
+		<name>ProvABCSResponseEBSInvokeSwitchCheck</name>
+		<internalKey>ProvABCSResponseEBSInvokeSwitchCheck</internalKey>
+		<description>When Async Delayed Response MEP is followed, all the Provider ABCSImpl and EBF services should have the capability to invoke the callback operation, but should have a switch case to do it only if the Requester wants a callback. The 'responseCode' attribute on the verb element of the EBM is to be evaluated that the requesting service is expecting a response. Sample condition:: bpws:getVariableData('someReqMsg', 'someEBM', '/ebm:someEBM /ebm:DataArea /corecom:Sync/ @responseCode') = ‘1’</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFResponseEBSInvokeSwitchCheck</key>
+		<severity>MAJOR</severity>
+		<name>EBFResponseEBSInvokeSwitchCheck</name>
+		<internalKey>EBFResponseEBSInvokeSwitchCheck</internalKey>
+		<description>When Async Delayed Response MEP is followed, all the Provider ABCSImpl and EBF services should have the capability to invoke the callback operation, but should have a switch case to do it only if the Requester wants a callback. The 'responseCode' attribute on the verb element of the EBM is to be evaluated that the requesting service is expecting a response. Sample condition:: bpws:getVariableData('someReqMsg', 'someEBM', '/ebm:someEBM /ebm:DataArea /corecom:Sync/ @responseCode') = ‘1’</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.MinExtPointsInASyncDRespMEPCheck</key>
+		<severity>CRITICAL</severity>
+		<name>MinExtPointsInASyncDRespMEPCheck</name>
+		<internalKey>MinExtPointsInASyncDRespMEPCheck</internalKey>
+		<description>BPEL processes which follow ASYNC Delayed Response pattern should have minimum of 4 extension points</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELScopeActivityCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELScopeActivityCheck</name>
+		<internalKey>BPELScopeActivityCheck</internalKey>
+		<description>All Scope activities in a BPEL process should follow the Pattern: {Name describing the Scoped Tasks}{Scope|Milestone}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalWSDLInEBSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalWSDLInEBSCheck</name>
+		<internalKey>NoLocalWSDLInEBSCheck</internalKey>
+		<description>Mediator Project should not contain local EBS WSDL. WSDL should be accessed from a web server.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELPickActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELPickActivityNamingCheck</name>
+		<internalKey>BPELPickActivityNamingCheck</internalKey>
+		<description>All Pick activities in a BPEL process should follow the Pattern: Pick{A name describing the functionality}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELWhileActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELWhileActivityNamingCheck</name>
+		<internalKey>BPELWhileActivityNamingCheck</internalKey>
+		<description>All While activities in a BPEL process should follow the  Pattern:  While{Name describing the loop condition}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.MaxExtPointsInFireAndForgetMEPCheck</key>
+		<severity>MAJOR</severity>
+		<name>MaxExtPointsInFireAndForgetMEPCheck</name>
+		<internalKey>MaxExtPointsInFireAndForgetMEPCheck</internalKey>
+		<description>All BPEL processes which follow Fire and Forget pattern should not have more than 4 extension points</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLFromCentralLocationInEBSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>WSDLFromCentralLocationInEBSCheck</name>
+		<internalKey>WSDLFromCentralLocationInEBSCheck</internalKey>
+		<description>All the Mediator WSDLs should be accessed from a centralized location. No local EBS WSDL's allowed.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CatchBlkProvABCSAllMEPNonPLCheck1</key>
+		<severity>CRITICAL</severity>
+		<name>CatchBlkProvABCSAllMEPNonPLCheck1</name>
+		<internalKey>CatchBlkProvABCSAllMEPNonPLCheck1</internalKey>
+		<description>This is to ensure Error Handling guidelines are followed in all the Provider ABCS processes. This checks the catch blocks in ProvABCS bpel for all the partnerlink errors. Includes remote, binding and extension faults. Excludes business faults and catchAll blocks. Following activities should not exist according to guidelines. 1:invoke - Invoke AIAAsyncErrorHandlingBPELProcess should be invoked for all non-partnerlink faults. NOTE: AIAFault from extension service should have 'ext' in the namespace prefix. Compliance Inspector would report these catch blocks as failures if namespace prefix does not contain the values. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELTerminateActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELTerminateActivityNamingCheck</name>
+		<internalKey>BPELTerminateActivityNamingCheck</internalKey>
+		<description>All Terminate activities in a BPEL process should follow the Pattern:  Terminate{reason of termination}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.PortTypeDocInABCSImplWSDLCheck</key>
+		<severity>MAJOR</severity>
+		<name>PortTypeDocInABCSImplWSDLCheck</name>
+		<internalKey>PortTypeDocInABCSImplWSDLCheck</internalKey>
+		<description>ABCS WSDL Port Types should be documented as per AIA Documentation standards. Please refer to Integration Developer Guide for annotation standards. All the documentation elements need to be present</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELReplyActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELReplyActivityNamingCheck</name>
+		<internalKey>BPELReplyActivityNamingCheck</internalKey>
+		<description>All Reply activities in a BPEL process should follow the Pattern: Reply{Message Name}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CatchBlkProvABCSSyncCheck</key>
+		<severity>CRITICAL</severity>
+		<name>CatchBlkProvABCSSyncCheck</name>
+		<internalKey>CatchBlkProvABCSSyncCheck</internalKey>
+		<description>This is to ensure Error Handling guidelines are followed in all the Provider ABCS processes. This checks the catch blocks in SYNC REQ_RESP ProvABCS bpel for all the errors. Following activities should exist according to guidelines. 1:Reply -Reply to the partnerlink which initiated the process (same port and operation) with 'fault'. NOTE: Reply activity portType should contain string 'ProvABCSImpl'. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMToFaultXSLFileExistsInProvCheck</key>
+		<severity>MAJOR</severity>
+		<name>EBMToFaultXSLFileExistsInProvCheck</name>
+		<internalKey>EBMToFaultXSLFileExistsInProvCheck</internalKey>
+		<description>Provider ABCS Impl Project should contain EBM_to_Fault.xsl for Fault Handling.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalPartnerLinkWSDLInEBFCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalPartnerLinkWSDLInEBFCheck</name>
+		<internalKey>NoLocalPartnerLinkWSDLInEBFCheck</internalKey>
+		<description>EBF Project can only contain the following types of WSDL : Project WSDL, Project Extension Abstract WSDL, _Properties WSDL(which is used for correlation) and any Ref WSDLs to partnerLinks. No partnerLink should refer to a local WSDL. It should always be through a Ref WSDL.Note:A ref WSDL should end with Ref.wsdl</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalSchemasInEBFCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalSchemasInEBFCheck</name>
+		<internalKey>NoLocalSchemasInEBFCheck</internalKey>
+		<description>EBF Process folder should not contain any schema files. All Utility schema should be accessed from a web server.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalSchemaImportsInWSDLOfABCSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalSchemaImportsInWSDLOfABCSCheck</name>
+		<internalKey>NoLocalSchemaImportsInWSDLOfABCSCheck</internalKey>
+		<description>No local schema should be Imported In process WSDL of ABCS or EBF.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalSchemaImportsInWSDLOfEBFCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalSchemaImportsInWSDLOfEBFCheck</name>
+		<internalKey>NoLocalSchemaImportsInWSDLOfEBFCheck</internalKey>
+		<description>No local schema should be Imported In process WSDL of ABCS or EBF.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.OperationTypeDocInABCSImplWSDLCheck</key>
+		<severity>MAJOR</severity>
+		<name>OperationTypeDocInABCSImplWSDLCheck</name>
+		<internalKey>OperationTypeDocInABCSImplWSDLCheck</internalKey>
+		<description>ABCS WSDL Operation Types should be documented as per AIA Documentation standards. Please refer to Integration Developer Guide for annotation standards. All the documentation elements need to be present</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoTargetSysIdHardWiringInXREFLookupCheck</key>
+		<severity>BLOCKER</severity>
+		<name>NoTargetSysIdHardWiringInXREFLookupCheck</name>
+		<internalKey>NoTargetSysIdHardWiringInXREFLookupCheck</internalKey>
+		<description>Target SystemId should not be hardwired in XREF lookup when used in XSL. Syntax used should be xref:lookupXRef('XREF_NAME',$XREFSourceCol,XPATH,$XREFTargetCol,true()|false()) where XREF_NAME can contain alphanumeric and underscores and XPATH can contain any XPATH Expression. Note: targetId column could be one of the following: 1) An Xpath containing EBMHeader. 2) 'COMMON' 3) Variable which does not contain a hard coded string value. 4) Xpath function.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.MaxExtPointsInASyncDRespMEPCheck</key>
+		<severity>MAJOR</severity>
+		<name>MaxExtPointsInASyncDRespMEPCheck</name>
+		<internalKey>MaxExtPointsInASyncDRespMEPCheck</internalKey>
+		<description>All BPEL processes which follow ASYNC Delayed Response pattern should not have more than 6 extension points</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELDecideActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELDecideActivityNamingCheck</name>
+		<internalKey>BPELDecideActivityNamingCheck</internalKey>
+		<description>All Decide activities in a BPEL process should start with a prefix of Decide. Pattern: Decide{name of decision}.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ExtServiceOperationSyncInABCSCheck</key>
+		<severity>MAJOR</severity>
+		<name>ExtServiceOperationSyncInABCSCheck</name>
+		<internalKey>ExtServiceOperationSyncInABCSCheck</internalKey>
+		<description>All operations in ABCS extension service should be synchronous. Every operation defined in the Extension wsdl should have an output message.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ExtServiceOperationSyncInEBFCheck</key>
+		<severity>MAJOR</severity>
+		<name>ExtServiceOperationSyncInEBFCheck</name>
+		<internalKey>ExtServiceOperationSyncInEBFCheck</internalKey>
+		<description>All operations in ABCS extension service should be synchronous. Every operation defined in the Extension wsdl should have an output message.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELFlowActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELFlowActivityNamingCheck</name>
+		<internalKey>BPELFlowActivityNamingCheck</internalKey>
+		<description>All Flow activities in a BPEL process should end with a suffix of Flow. Pattern: {Name describing concurrent tasks}Flow</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.MessageTypeDocInABCSImplWSDLCheck</key>
+		<severity>MAJOR</severity>
+		<name>MessageTypeDocInABCSImplWSDLCheck</name>
+		<internalKey>MessageTypeDocInABCSImplWSDLCheck</internalKey>
+		<description>ABCS WSDL message Types should be documented as per AIA Documentation standards. Please refer to Integration Developer Guide for annotation standards. All the documentation elements need to be present</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMIDUsedForCorrelation</key>
+		<severity>MINOR</severity>
+		<name>EBMIDUsedForCorrelation</name>
+		<internalKey>EBMIDUsedForCorrelation</internalKey>
+		<description>ebmprefix:EBMName/corecom:EBMHeader/corecom:EBMID (in EBM)or ebmprefix:EBMName/corecom:EBMHeader/corecom:RequestEBMID (in ResponseEBM) should be always used for correlation in ABCS processes that implement Async Delayed Response pattern. //bpws:propertyAlias/@query should contain either of the above xpath where EBMName and prefixes are replaced by your prefix:EBM</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoHardWiringUnamePwdInEndpointURIofABCSCheck</key>
+		<severity>MAJOR</severity>
+		<name>NoHardWiringUnamePwdInEndpointURIofABCSCheck</name>
+		<internalKey>NoHardWiringUnamePwdInEndpointURIofABCSCheck</internalKey>
+		<description>EndPoint URLs defined in AIAConfiguration properties should not contain UserName and Password values. OWSM should be used for all Web Services invocation authentication purposes.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoHardWiringUnamePwdInEndpointURIofEBFCheck</key>
+		<severity>MAJOR</severity>
+		<name>NoHardWiringUnamePwdInEndpointURIofEBFCheck</name>
+		<internalKey>NoHardWiringUnamePwdInEndpointURIofEBFCheck</internalKey>
+		<description>EndPoint URLs defined in AIAConfiguration properties should not contain UserName and Password values. OWSM should be used for all Web Services invocation authentication purposes.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELSequenceActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELSequenceActivityNamingCheck</name>
+		<internalKey>BPELSequenceActivityNamingCheck</internalKey>
+		<description>All Sequence activities in a BPEL process should follow the Pattern: {Name describing the Sequence Tasks}Sequence</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.MinExtPointsInFireAndForgetMEPCheck</key>
+		<severity>CRITICAL</severity>
+		<name>MinExtPointsInFireAndForgetMEPCheck</name>
+		<internalKey>MinExtPointsInFireAndForgetMEPCheck</internalKey>
+		<description>All BPEL processes which follow Fire and Forget pattern should have minimum of 2 extension points</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CatchBlockRemoteFaultExistInBPELCheck</key>
+		<severity>CRITICAL</severity>
+		<name>CatchBlockRemoteFaultExistInBPELCheck</name>
+		<internalKey>CatchBlockRemoteFaultExistInBPELCheck</internalKey>
+		<description>Catch block has to be defined for remoteFault in BPEL process.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AIAServiceConfigFileForABCSExistsCheck</key>
+		<severity>MAJOR</severity>
+		<name>AIAServiceConfigFileForABCSExistsCheck</name>
+		<internalKey>AIAServiceConfigFileForABCSExistsCheck</internalKey>
+		<description>Every ABCS Impl should have a service configuration properties file named AIAServiceConfigurationProperties.xml in the project folder.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AIAServiceConfigFileForEBFExistsCheck</key>
+		<severity>MAJOR</severity>
+		<name>AIAServiceConfigFileForEBFExistsCheck</name>
+		<internalKey>AIAServiceConfigFileForEBFExistsCheck</internalKey>
+		<description>Every ABCS Impl should have a service configuration properties file named AIAServiceConfigurationProperties.xml in the project folder.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSExtWSDLExistsAndNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>ABCSExtWSDLExistsAndNamingCheck</name>
+		<internalKey>ABCSExtWSDLExistsAndNamingCheck</internalKey>
+		<description>ABCS Extension Abstract WSDL name should be according to the AIA Naming Standards Guide. Pattern: {ServiceOperation}{AppName}({Industry})?ABCSImplExtensionAbstract{Version(optional)}(.wsdl). Note: The artifact names i.e., industry, operation etc should be consistent in process naming, target namespace and WSDL. e.g., (CreateCustomerPartyList)(BRM)(Communications)(ProvABCSImpl)(V2)(ExtensionAbstract).wsdl, (CreateCustomerPartyList)(Ebiz)(ProvABCSImpl)(ExtensionAbstract).wsdl.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ExtServicePlinkExistForABCSCheck</key>
+		<severity>MAJOR</severity>
+		<name>ExtServicePlinkExistForABCSCheck</name>
+		<internalKey>ExtServicePlinkExistForABCSCheck</internalKey>
+		<description>All ABCS processes should have a partnerlink defined for extension enablement. Name of the partnerlink should be {processName}Extension</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMHeaderVariableInABCSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBMHeaderVariableInABCSCheck</name>
+		<internalKey>EBMHeaderVariableInABCSCheck</internalKey>
+		<description>ABCSImpl BPEL file should contain a variable called EBM_HEADER. This variable is used by Error handling process to get EBMHeader values for logging and notifications. Please refer to Integration Developer Guide for further details.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CatchBlkProvABCSAllMEPNonPLCheck</key>
+		<severity>CRITICAL</severity>
+		<name>CatchBlkProvABCSAllMEPNonPLCheck</name>
+		<internalKey>CatchBlkProvABCSAllMEPNonPLCheck</internalKey>
+		<description>This is to ensure Error Handling guidelines are followed in all the Provider ABCS processes. This checks the catch blocks in ProvABCS bpel for all the non partnerlink errors and extension service faults. Includes business faults, subLanguageExecution faults and catchAll blocks. Excludes extension service fault and system faults (partnerlink errors). Following activities should exist according to guidelines. 1:invoke - Invoke AIAAsyncErrorHandlingBPELProcess should be invoked for all non-partnerlink faults. NOTE: AIAFault from extension service should have 'ext' in the namespace prefix. Compliance Inspector would report these catch blocks as failures if namespace prefix does not contain the values. NOTE: Invoke activity can be substituted by java embedding activity also. There should be a invocation of oracle.apps.aia.core.eh.IAIAErrorHandler.sendNotification() method. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalSchemasInABCSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalSchemasInABCSCheck</name>
+		<internalKey>NoLocalSchemasInABCSCheck</internalKey>
+		<description>ABCS Impl Process folder should not contain any schema files. All Utility schema should be accessed from a web server.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSProcessWSDLExistsAndNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>ABCSProcessWSDLExistsAndNamingCheck</name>
+		<internalKey>ABCSProcessWSDLExistsAndNamingCheck</internalKey>
+		<description>ABCS BPEL process WSDL name should be according to the AIA Naming Standards Guide. Pattern: {ServiceOperation}{AppName}({Industry})?{ServiceType}{Version(optional)}.wsdl. Note: The artifact names i.e., industry, operation etc should be consistent in process naming, target namespace and WSDL. e.g.,(CreateCustomerPartyList)(BRM)(Communications)(ProvABCSImpl)(V2).wsdl ,(CreateCustomerPartyList)(Ebiz)(ProvABCSImpl).wsdl.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoTargetSysHardWiringInPopulateXrefCheck</key>
+		<severity>BLOCKER</severity>
+		<name>NoTargetSysHardWiringInPopulateXrefCheck</name>
+		<internalKey>NoTargetSysHardWiringInPopulateXrefCheck</internalKey>
+		<description>Target SystemId should not be hardwired when populateXRef is used in XSL. Syntax used should be orcl:populateXRefRow ('XREF_NAME',$XREFSourceCol,SourceValue,$XREFTargetCol,TargetValue,'') where XREF_NAME can contain alphanumeric and underscore characters and XREFSourceCol,XREFTargetCol should not be hard coded.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELInvokeActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELInvokeActivityNamingCheck</name>
+		<internalKey>BPELInvokeActivityNamingCheck</internalKey>
+		<description>All Invoke activities in a BPEL process should follow the Pattern: Invoke{Partner Link Name}{Call/Start}{Operation}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSDoesNotPopulateTargetCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSDoesNotPopulateTargetCheck</name>
+		<internalKey>ABCSDoesNotPopulateTargetCheck</internalKey>
+		<description>This is to ensure that target node is not populated during ABM to EBM transformation in Requester ABCSImpl. Target should be populated via routing rules in Mediator or should be derived from AIA configurations file. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELReceiveActivityCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELReceiveActivityCheck</name>
+		<internalKey>BPELReceiveActivityCheck</internalKey>
+		<description>All receive activities in a BPEL process should follow the Pattern: receive{A name describing the functionality}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.RunTimeFaultWSDLimportInABCSImplCheck</key>
+		<severity>CRITICAL</severity>
+		<name>RunTimeFaultWSDLimportInABCSImplCheck</name>
+		<internalKey>RunTimeFaultWSDLimportInABCSImplCheck</internalKey>
+		<description>Runtime Fault WSDL should be imported in every ABCS BPEL Process for fault handling. RuntimeFaultMessage is defined in this wsdl which are used to define all system faults.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMHeaderVariableAssignedCheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBMHeaderVariableAssignedCheck</name>
+		<internalKey>EBMHeaderVariableAssignedCheck</internalKey>
+		<description>ABCSImpl BPEL file should contain a variable called EBM_HEADER and it should be assigned a value from a incoming EBM. This variable is used by Error handling process to get EBMHeader values for logging and notifications. Please refer to Integration Developer Guide for further details.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.DynamicPLinkForSecServiceInReqABCSCheck</key>
+		<severity>MAJOR</severity>
+		<name>DynamicPLinkForSecServiceInReqABCSCheck</name>
+		<internalKey>DynamicPLinkForSecServiceInReqABCSCheck</internalKey>
+		<description>Dynamic partner link should be used to invoke security service. The endpoint location of the security service has to be obtained from the AIAConfig properties configuration file. Note::Please use the standard assign activity name within the security service invocation scope :GetEndpointLocation</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELAssignActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELAssignActivityNamingCheck</name>
+		<internalKey>BPELAssignActivityNamingCheck</internalKey>
+		<description>All Assign activities in a BPEL process should start with a prefix of Assign followed by activity name. Pattern: Assign{Name of what is being assigned}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMHeaderPopulationCheck1</key>
+		<severity>CRITICAL</severity>
+		<name>EBMHeaderPopulationCheck1</name>
+		<internalKey>EBMHeaderPopulationCheck1</internalKey>
+		<description>This is to ensure EBM Header is fully populated in the Requester ABCSImpl. This check is to ensure MessageProcessingInstruction should contain all the elements in the ReqABM_to_EBM xsl. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.DynamicPlinkEnablementCheck</key>
+		<severity>CRITICAL</severity>
+		<name>DynamicPlinkEnablementCheck</name>
+		<internalKey>DynamicPlinkEnablementCheck</internalKey>
+		<description>Dynamic PartnerLink construct should be used for all PartnerLinks defined to invoke services except the Mediator. Also excluded are invokes to extension service and AIAErrorHandling service. This approach is followed since the target end point could be either the Composite Application Validation System (CAVS) or a concrete end point for one of the application instances. Note that this assertion does not check for correctness of the dynamic partnerlink code. It checks whether any variable has been constructed and assigned to the same partnerlink which is used for invoke. i.e., There should be a copy activity which copies the WSA EndpointReference variable to the partnerlink. Note:: partnerLinks which are mentioned above to be excluded should contain one of the following string values: EBS,Ext,AIAAsyncErrorHandlingBPELProcess,TransformAppContext. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CatchBlkProvABCSASyncRespCheck</key>
+		<severity>MAJOR</severity>
+		<name>CatchBlkProvABCSASyncRespCheck</name>
+		<internalKey>CatchBlkProvABCSASyncRespCheck</internalKey>
+		<description>This is to ensure Error Handling guidelines are followed in all the Provider ABCS processes. This checks the catch blocks in ASYNC REQ_RESP ProvABCS bpel for all the errors. Following activities should exist according to guidelines. 1:Invoke -invoke ResponseEBS once all the fault handling is done. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSTargetNameSpacesCheck</key>
+		<severity>BLOCKER</severity>
+		<name>ABCSTargetNameSpacesCheck</name>
+		<internalKey>ABCSTargetNameSpacesCheck</internalKey>
+		<description>All targetNameSpaces for ABCS processes should follow the standard pattern defined in AIA Naming Standards guide :: 'http://xmlns.oracle.com/ABCSImpl/[Short Application Name]/(Core|(Industry/IndustryName))/ServiceName/version(optional)'. Note: 'ServiceName' in the above mentioned targetNameSpace should also be according to standards ({ServiceOperation}{AppName}{Industry(if not core process)}{ServiceType}). e.g., (CreateCustomerPartyList)(BRM)(Communications)(ProvABCSImpl), (CreateCustomerPartyList)(Ebiz)(ProvABCSImpl). TargetNameSpace example:  'http://xmlns.oracle.com/ABCSImpl/Siebel/Industry/Comms/SyncItemCompositionListSiebelCommsProvABCSImpl/V1'.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoTargetSysIdHardWiringInDVMLookupCheck</key>
+		<severity>BLOCKER</severity>
+		<name>NoTargetSysIdHardWiringInDVMLookupCheck</name>
+		<internalKey>NoTargetSysIdHardWiringInDVMLookupCheck</internalKey>
+		<description>Target SystemId should not be hardwired in DVM lookup when used in XSL. Syntax used should be orcl:lookupValue('DVM_NAME',$DVMSourceCol,XPATH,$DVMTargetCol,'') where DVM_NAME can contain alphanumeric and underscore characters and XPATH can contain any XPATH Expression. Note: targetId column could be one of the following: 1) An Xpath containing EBMHeader. 2) 'COMMON' 3) Variable which does not contain a hard coded string value. 4) Xpath function.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoUnamePwdInDVMCheck</key>
+		<severity>BLOCKER</severity>
+		<name>NoUnamePwdInDVMCheck</name>
+		<internalKey>NoUnamePwdInDVMCheck</internalKey>
+		<description>DVMs stores should have no credentials stored. They should not contain UserName and Password values. OWSM should be used for all Web Services invocation authentication purposes.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMHeaderPopulationCheck2</key>
+		<severity>CRITICAL</severity>
+		<name>EBMHeaderPopulationCheck2</name>
+		<internalKey>EBMHeaderPopulationCheck2</internalKey>
+		<description>This is to ensure EBM Header is fully populated in the Requester ABCSImpl. This check is to ensure Sender should contain all the elements in the ReqABM_to_EBM xsl. Elements not found will be reported in violations. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ExtensionStandardPatternCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ExtensionStandardPatternCheck</name>
+		<internalKey>ExtensionStandardPatternCheck</internalKey>
+		<description>ABCS Extension enablement should follow standard code pattern Assign-Invoke-Assign. Assign the value from extension service response to the same variable, which was used to copy the value into extension service request. 1st Assign activity 'from' variable and 2nd assign activity 'to' variable should be the same. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.OperationsNotExistInRefWSDLCheck</key>
+		<severity>MAJOR</severity>
+		<name>OperationsNotExistInRefWSDLCheck</name>
+		<internalKey>OperationsNotExistInRefWSDLCheck</internalKey>
+		<description>Reference WSDLs {PartnerLink Ref WSDL's}in a BPEL process cannot have operations defined.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TXNEnableInAsyncFFMEPReqCheck1</key>
+		<severity>MAJOR</severity>
+		<name>TXNEnableInAsyncFFMEPReqCheck1</name>
+		<internalKey>TXNEnableInAsyncFFMEPReqCheck1</internalKey>
+		<description>This check is for all Requester ABCSImpl that follow Async Delayed Response MEP. partnerLinkBinding that invokes the Mediator should contain a property 'transaction' and it should be set to 'participate'. This is required for bringing all processes in an integration scenario under one transaction. Note: partnerLinkBinding name should contain 'EBS'.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMHeaderPopulationMessageProcInsCheck</key>
+		<severity>MINOR</severity>
+		<name>EBMHeaderPopulationMessageProcInsCheck</name>
+		<internalKey>EBMHeaderPopulationMessageProcInsCheck</internalKey>
+		<description>This is to ensure that message Processing Instruction has been populated as per standards in EBM Header in ABM-to-EBM xsl. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CorrelationUsedWithReceiveforAsync</key>
+		<severity>MAJOR</severity>
+		<name>CorrelationUsedWithReceiveforAsync</name>
+		<internalKey>CorrelationUsedWithReceiveforAsync</internalKey>
+		<description>When Async Delayed Response MEP is followed, Requester ABCS should receive message from ResponseEBS with correlation. Following attributes should be set as follows: initiate=no, set=CorrelationSetName. Note that operation of the receive activity should contain string 'EBS'.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CatchBlockBindingFaultExistInBPELCheck</key>
+		<severity>CRITICAL</severity>
+		<name>CatchBlockBindingFaultExistInBPELCheck</name>
+		<internalKey>CatchBlockBindingFaultExistInBPELCheck</internalKey>
+		<description>Catch block has to be defined for BindingFault in BPEL process.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELWaitActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELWaitActivityNamingCheck</name>
+		<internalKey>BPELWaitActivityNamingCheck</internalKey>
+		<description>All Wait activities in a BPEL process should follow the Pattern: Wait{Followed by a name describing the reason for waiting}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.MessageTypeNotExistInRefWSDLCheck</key>
+		<severity>MAJOR</severity>
+		<name>MessageTypeNotExistInRefWSDLCheck</name>
+		<internalKey>MessageTypeNotExistInRefWSDLCheck</internalKey>
+		<description>Reference WSDLs {PartnerLink Ref WSDL's}in a BPEL process cannot have messages defined.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CorrelationUsedWithInvokeforAsync</key>
+		<severity>MAJOR</severity>
+		<name>CorrelationUsedWithInvokeforAsync</name>
+		<internalKey>CorrelationUsedWithInvokeforAsync</internalKey>
+		<description>When Async Delayed Response MEP is followed, Requester ABCS should invoke Mediator with correlation. Following attributes should be set as follows: initiate=yes, set=CorrelationSetName, pattern=out.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CatchBlkABCSAllMEPCheck</key>
+		<severity>CRITICAL</severity>
+		<name>CatchBlkABCSAllMEPCheck</name>
+		<internalKey>CatchBlkABCSAllMEPCheck</internalKey>
+		<description>This is to ensure Error Handling guidelines are followed in all ABCS processes. This check is for all the catch and catchAll blocks in bpel. Following activities should exist according to guidelines. 1:throw - rethrow the fault so that the faulted instance becomes visible in BPEL console. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalPartnerLinkWSDLInABCSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalPartnerLinkWSDLInABCSCheck</name>
+		<internalKey>NoLocalPartnerLinkWSDLInABCSCheck</internalKey>
+		<description>ABCS Project can only contain the following types of WSDL :Project WSDL, Project Extension Abstract WSDL, _Properties WSDL(which is used for correlation) and any Ref WSDLs to partnerLinks. No partnerLink should refer to a local WSDL. It should always be through a Ref WSDL. Note:A ref WSDL should end with Ref.wsdl</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMHeaderPopulationWSACheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBMHeaderPopulationWSACheck</name>
+		<internalKey>EBMHeaderPopulationWSACheck</internalKey>
+		<description>This check is for all ReqABCSImpl that follow Async Delayed Response pattern. This checks if Requester ServiceName is set in EBMHeader in the ABM-to-EBM transformation. Set the EBMHeader/Sender/WSAddress/wsa:ReplyTo/wsa:ServiceName to the name of the requesting service name in ABM to EBM transformation. This will be the name of the service that needs to be invoked by Mediator for processing the response message. In most of the situations, it will be the same Requester ABC service that would also be responsible for processing the response message coming from provider ABC service. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ProcessWSDLNameSpacePrefixesNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>ProcessWSDLNameSpacePrefixesNamingCheck</name>
+		<internalKey>ProcessWSDLNameSpacePrefixesNamingCheck</internalKey>
+		<description>In an ABCS or EBF process WSDL, all the namespace prefixes should follow AIA Naming standard guidelines. Default generated ns1, ns2 prefixes are not allowed and have to be changed.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CorrelationSetsDefinedforAsyncReqABCS</key>
+		<severity>MAJOR</severity>
+		<name>CorrelationSetsDefinedforAsyncReqABCS</name>
+		<internalKey>CorrelationSetsDefinedforAsyncReqABCS</internalKey>
+		<description>When Async Delayed Response MEP is followed, Requester ABCS should have at least one correlationSet defined to be used with invoke and receive activities.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.wsdlRuntimeLocationExistForPlinkInABCSCheck</key>
+		<severity>MAJOR</severity>
+		<name>wsdlRuntimeLocationExistForPlinkInABCSCheck</name>
+		<internalKey>wsdlRuntimeLocationExistForPlinkInABCSCheck</internalKey>
+		<description>EBS references wsdlLocation attribute should not have reference of local wsdl file.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.wsdlRuntimeLocationExistForPlinkInEBFCheck</key>
+		<severity>MAJOR</severity>
+		<name>wsdlRuntimeLocationExistForPlinkInEBFCheck</name>
+		<internalKey>wsdlRuntimeLocationExistForPlinkInEBFCheck</internalKey>
+		<description>EBS references wsdlLocation attribute should not have reference of local wsdl file.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AIAConfigEntryDefaultSystemIdDefinedCheck</key>
+		<severity>CRITICAL</severity>
+		<name>AIAConfigEntryDefaultSystemIdDefinedCheck</name>
+		<internalKey>AIAConfigEntryDefaultSystemIdDefinedCheck</internalKey>
+		<description>Config File Should have an entry that would specify the Default SystemID to use for the Service. Every ABCS Impl Service is coded for a specific application. So this entry (Default.SystemID) would specify the default id to use. Note: Make sure all elements are declared under the target namespace 'http://xmlns.oracle.com/aia/core/config/V1'.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELThrowActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELThrowActivityNamingCheck</name>
+		<internalKey>BPELThrowActivityNamingCheck</internalKey>
+		<description>All Throw activities in a BPEL process should follow the Pattern: Throw{fault name}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELSwitchActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELSwitchActivityNamingCheck</name>
+		<internalKey>BPELSwitchActivityNamingCheck</internalKey>
+		<description>All Switch activities in a BPEL process should follow the Pattern: Switch{Name of what is being evaluated}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABMToEBMViceVersaCustomXSLExistsCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABMToEBMViceVersaCustomXSLExistsCheck</name>
+		<internalKey>ABMToEBMViceVersaCustomXSLExistsCheck</internalKey>
+		<description>Every XSL that transforms an ABM to EBM or vice versa has to have a corresponding custom XSL for extension enablement. E.g., if someEBM_to_someABM.xsl exists in an ABCS then there has to be a someEBM_to_someABM_Custom.xsl in the same ABCS BPEL project and it has to be imported by the main XSL. Note that this assertion relies on JDev generated processing instruction 'oracle-xsl-mapper'. It looks for 'EBM' in either source or target so that only ABM-EBM and vice versa transformations are picked up. If this PI is not present in the xsl then even though the xsl is not ABM-EBM or EBM-ABM it might be picked up.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.InvokeSecurityServiceInReqABCSImplCheck</key>
+		<severity>MAJOR</severity>
+		<name>InvokeSecurityServiceInReqABCSImplCheck</name>
+		<internalKey>InvokeSecurityServiceInReqABCSImplCheck</internalKey>
+		<description>Every participating application in a PIP should have a corresponding security service with 2 operations to transform from AppContext to AppNeutralContext and vice versa. Requester ABCS Impl should have a partnerLink defined and a invoke activity to invoke security service with operation TransformToAppNeutralContext. Note::partnerlink name should follow the naming standards Pattern:TransformAppContext{appShortName}Service </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.MinExtPointsInSyncMEPCheck</key>
+		<severity>CRITICAL</severity>
+		<name>MinExtPointsInSyncMEPCheck</name>
+		<internalKey>MinExtPointsInSyncMEPCheck</internalKey>
+		<description>All BPEL processes which follow SYNC Request Response pattern should have minimum of 4 extension points</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFTargetNameSpacesCheck</key>
+		<severity>BLOCKER</severity>
+		<name>EBFTargetNameSpacesCheck</name>
+		<internalKey>EBFTargetNameSpacesCheck</internalKey>
+		<description>All targetNameSpaces for EBF processes should follow the standard pattern defined in AIA Naming Standards guide :: 'http://xmlns.oracle.com/EnterpriseFlows/(Core|(Industry/IndustryName))/ServiceName/version(optional)'</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AddTargetSystemIDFileExistsInProvCheck</key>
+		<severity>CRITICAL</severity>
+		<name>AddTargetSystemIDFileExistsInProvCheck</name>
+		<internalKey>AddTargetSystemIDFileExistsInProvCheck</internalKey>
+		<description>Provider ABCS Impl Project should contain AddTargetSystemID.xsl for setting targetSystemId. This transformation takes care of setting the /EBMHeader/Target/ID in the EBMHeader. This is to ensure that Provider ABC services do not assume that the target system id has been populated in EBM header. This XSL checks if targetSystemID is already populated. If so it copies the ID. Otherwise it derives it from the AIAConfigurations file.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMHeaderPopulationCheck4</key>
+		<severity>CRITICAL</severity>
+		<name>EBMHeaderPopulationCheck4</name>
+		<internalKey>EBMHeaderPopulationCheck4</internalKey>
+		<description>This is to ensure EBM Header is fully populated in the Requester ABCSImpl. This check is to ensure EBMTracking should contain all the elements in the ReqABM_to_EBM xsl. Elements not found will be reported in violations. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELJavaEmbeddingActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELJavaEmbeddingActivityNamingCheck</name>
+		<internalKey>BPELJavaEmbeddingActivityNamingCheck</internalKey>
+		<description>All Java Embedding activities in a BPEL process should follow the pattern Pattern: {A name describing the functionality}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMHeaderPopulationCheck3</key>
+		<severity>CRITICAL</severity>
+		<name>EBMHeaderPopulationCheck3</name>
+		<internalKey>EBMHeaderPopulationCheck3</internalKey>
+		<description>This is to ensure EBM Header is fully populated in the Requester ABCSImpl. This check is to ensure BusinessScope should contain all the elements in the ReqABM_to_EBM xsl. Elements not found will be reported in violations. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CatchBlkReqABCSAllMEPNonPLCheck</key>
+		<severity>CRITICAL</severity>
+		<name>CatchBlkReqABCSAllMEPNonPLCheck</name>
+		<internalKey>CatchBlkReqABCSAllMEPNonPLCheck</internalKey>
+		<description>This is to ensure Error Handling guidelines are followed in all the ReqABCS processes. This checks the catch blocks in ReqABCS bpel for all the non-partnerlink errors. Exclusions are system faults (partnerlink errors such as binding and remote faults), fault from extension process, fault from Mediator in case of SYNC REQ_RESP, ABCS fault in case of ASYNC REQ_RESP. Following activities should exist according to guidelines. 1:invoke - Invoke AIAAsyncErrorHandlingBPELProcess should be invoked for all non-partnerlink faults except the ones mentioned above. NOTE: AIAFault from Mediator in case of SYNC REQ_RESP should have 'ebs' in namespace prefix and AIAFault raised after examining fault string from ResponseEBM in ASYNC_REQ_RESP should have 'abcs' in namespace prefix. AIAFault from extension service should have 'ext' in the namespace prefix. NOTE: Invoke activity can be substituted by java embedding activity also. There should be a invocation of oracle.apps.aia.core.eh.IAIAErrorHandler.sendNotification() method. Compliance Inspector would report these catch blocks as failures if namespace prefix does not contain the values. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLDocumentationInABCSImplCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLDocumentationInABCSImplCheck</name>
+		<internalKey>WSDLDocumentationInABCSImplCheck</internalKey>
+		<description>ABCS WSDL should be documented as per AIA Documentation standards. Please refer to Integration Developer Guide for annotation standards. All the documentation elements need to be present</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.XSLNoEmptyElementsOutputCheck</key>
+		<severity>MINOR</severity>
+		<name>XSLNoEmptyElementsOutputCheck</name>
+		<internalKey>XSLNoEmptyElementsOutputCheck</internalKey>
+		<description>Empty elements should not be outputted.  Use xsl:if construct to ensure an element is not output if its source element is missing or empty.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.PortTypeNotExistInRefWSDLCheck</key>
+		<severity>MAJOR</severity>
+		<name>PortTypeNotExistInRefWSDLCheck</name>
+		<internalKey>PortTypeNotExistInRefWSDLCheck</internalKey>
+		<description>Reference WSDLs {PartnerLink Ref WSDL's}in a BPEL process cannot have portTypes defined.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CatchBlkReqABCSSyncCheck</key>
+		<severity>CRITICAL</severity>
+		<name>CatchBlkReqABCSSyncCheck</name>
+		<internalKey>CatchBlkReqABCSSyncCheck</internalKey>
+		<description>This is to ensure Error Handling guidelines are followed in all the Requester ABCS processes. This checks the catch blocks in SYNC REQ_RESP ReqABCS bpel for all the errors. Following activities should exist according to guidelines. 1:Reply -Reply to the partnerlink which initiated the process(same port and operation) with 'fault'. NOTE: Reply activity portType should contain string 'ReqABCSImpl'. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.XACMLMessageToEBMHeaderInReqABCSCheck</key>
+		<severity>MAJOR</severity>
+		<name>XACMLMessageToEBMHeaderInReqABCSCheck</name>
+		<internalKey>XACMLMessageToEBMHeaderInReqABCSCheck</internalKey>
+		<description>In Req ABCS Impl once the Security Service for the Requester application is invoked, there should be assign activity that copies the XACML request from the security service response to EBM header. This Assign activity should exist within the same scope. Note::partnerlink name should follow the naming standards Pattern:TransformAppContext{appShortName}Service </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.FaultPolicyEnabledforABCSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>FaultPolicyEnabledforABCSCheck</name>
+		<internalKey>FaultPolicyEnabledforABCSCheck</internalKey>
+		<description>Property oracle.composite.faultPolicyFile need to be set in composite.xml of every ABCS and EBF project with process level fault policy file name.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.FaultPolicyEnabledforEBFCheck</key>
+		<severity>CRITICAL</severity>
+		<name>FaultPolicyEnabledforEBFCheck</name>
+		<internalKey>FaultPolicyEnabledforEBFCheck</internalKey>
+		<description>Property oracle.composite.faultPolicyFile need to be set in composite.xml of every ABCS and EBF project with process level fault policy file name.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBMHeaderPopulationCheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBMHeaderPopulationCheck</name>
+		<internalKey>EBMHeaderPopulationCheck</internalKey>
+		<description>This is to ensure EBM Header is fully populated in the Requester ABCSImpl. This check is to ensure basic elements are populated fully in ReqABM_to_EBM xsl. Following elements need to be populated: EBMID,EBMName,EBOName,VerbCode. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalWSDLImportsInWSDLOfABCSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalWSDLImportsInWSDLOfABCSCheck</name>
+		<internalKey>NoLocalWSDLImportsInWSDLOfABCSCheck</internalKey>
+		<description>No local WSDL should be Imported In process WSDL of ABCS or EBF.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalWSDLImportsInWSDLOfEBFCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalWSDLImportsInWSDLOfEBFCheck</name>
+		<internalKey>NoLocalWSDLImportsInWSDLOfEBFCheck</internalKey>
+		<description>No local WSDL should be Imported In process WSDL of ABCS or EBF.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.BPELCompensateActivityNamingCheck</key>
+		<severity>MAJOR</severity>
+		<name>BPELCompensateActivityNamingCheck</name>
+		<internalKey>BPELCompensateActivityNamingCheck</internalKey>
+		<description>All Compensate activities in a BPEL process should start with a prefix of Compensate followed by activity name. Pattern: Compensate{scope name}.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AddTargetSystemIDCallExistsInProvCheck</key>
+		<severity>CRITICAL</severity>
+		<name>AddTargetSystemIDCallExistsInProvCheck</name>
+		<internalKey>AddTargetSystemIDCallExistsInProvCheck</internalKey>
+		<description>Provider ABCS Impl Project should contain AddTargetSystemID.xsl for setting targetSystemId. BPEL should contain an assign activity that invokes this transformation and assigns it to the EBM. This transformation takes care of setting the /EBMHeader/Target/ID in the EBMHeader. This is to ensure that Provider ABC services do not assume that the target system id has been populated in EBM header. This XSL checks if targetSystemID is already populated. If so it copies the ID. Otherwise it derives it from the AIAConfigurations file.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CatchBlkReqABCSAllMEPNonPLCheck1</key>
+		<severity>CRITICAL</severity>
+		<name>CatchBlkReqABCSAllMEPNonPLCheck1</name>
+		<internalKey>CatchBlkReqABCSAllMEPNonPLCheck1</internalKey>
+		<description>This is to ensure Error Handling guidelines are followed in all the Requester ABCS processes. This checks the catch blocks in ReqABCS bpel for all the partnerlink errors. Included in check are fault from extension process, fault from Mediator in case of SYNC REQ_RESP, ABCS fault in case of ASYNC REQ_RESP. Following activities should not exist according to guidelines. 1:invoke - Invoke AIAAsyncErrorHandlingBPELProcess should not exist for all catch blocks mentioned above. It is recommended that these faults be handled using fault policies. If the condition already exists in fault policies then it may result in multiple notifications. NOTE: AIAFault from Mediator in case of SYNC REQ_RESP should have 'ebs' in namespace prefix and AIAFault raised after examining fault string from ResponseEBM in ASYNC_REQ_RESP should have 'abcs' in namespace prefix. AIAFault from extension service should have 'ext' in the namespace prefix. Compliance Inspector would report these catch blocks as failures if namespace prefix does not contain the values. NOTE: Invoke activity can be substituted by java embedding activity also. There should be a invocation of oracle.apps.aia.core.eh.IAIAErrorHandler.sendNotification() method. For additional information refer to Integration Developer Guide.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.wsdlLocationPropertyExistForPlinkInABCSCheck</key>
+		<severity>MAJOR</severity>
+		<name>wsdlLocationPropertyExistForPlinkInABCSCheck</name>
+		<internalKey>wsdlLocationPropertyExistForPlinkInABCSCheck</internalKey>
+		<description>import location should be reference wsdl for EnterpriseServices.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.wsdlLocationPropertyExistForPlinkInEBFCheck</key>
+		<severity>MAJOR</severity>
+		<name>wsdlLocationPropertyExistForPlinkInEBFCheck</name>
+		<internalKey>wsdlLocationPropertyExistForPlinkInEBFCheck</internalKey>
+		<description>import location should be reference wsdl for EnterpriseServices.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.NoLocalSchemasInEBSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>NoLocalSchemasInEBSCheck</name>
+		<internalKey>NoLocalSchemasInEBSCheck</internalKey>
+		<description>Mediator Project should not contain any schema(.xsd) files.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLDocumentationIsFirstChildCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLDocumentationIsFirstChildCheck</name>
+		<internalKey>WSDLDocumentationIsFirstChildCheck</internalKey>
+		<description>In a DESCRIPTION the wsdl:documentation element MAY be present as the first child element of wsdl:import, wsdl:part and wsdl:definitions in addition to the elements cited in the WSDL1.1 specification</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.UTFEncodingUsedinWSDLCheck</key>
+		<severity>MAJOR</severity>
+		<name>UTFEncodingUsedinWSDLCheck</name>
+		<internalKey>UTFEncodingUsedinWSDLCheck</internalKey>
+		<description>WSDL description must use UTF-8 or UTF-16 encoding. UTF encoding can be specified in the processing instruction of an XML. The assertion looks for the existence of UTF in the processing instruction. This check is to ensure compatibility with WS interoperability basic profile 1.0</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.UTFEncodingUsedinSchemaCheck</key>
+		<severity>MAJOR</severity>
+		<name>UTFEncodingUsedinSchemaCheck</name>
+		<internalKey>UTFEncodingUsedinSchemaCheck</internalKey>
+		<description>Schema definition must use UTF-8 or UTF-16 encoding. UTF encoding can be specified in the processing instruction of an XML. The assertion looks for the existence of UTF in the processing instruction. This check is to ensure compatibility with WS interoperability basic profile 1.0</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.XMLversionUsageInWSDLCheck</key>
+		<severity>MAJOR</severity>
+		<name>XMLversionUsageInWSDLCheck</name>
+		<internalKey>XMLversionUsageInWSDLCheck</internalKey>
+		<description>WSDL description must use xml version 1.0. XML version can be specified in the processing instruction of an XML. The assertion looks for the existence of UTF in the processing instruction. This check is to ensure compatibility with WS interoperability basic profile 1.0</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.XMLversionUsageInSchemaCheck</key>
+		<severity>MAJOR</severity>
+		<name>XMLversionUsageInSchemaCheck</name>
+		<internalKey>XMLversionUsageInSchemaCheck</internalKey>
+		<description>WSDL description must use xml version 1.0. XML version can be specified in the processing instruction of an XML. The assertion looks for the existence of UTF in the processing instruction. This check is to ensure compatibility with WS interoperability basic profile 1.0</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLImportUsedforWSDLOnlyCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLImportUsedforWSDLOnlyCheck</name>
+		<internalKey>WSDLImportUsedforWSDLOnlyCheck</internalKey>
+		<description>WSDL import element must not be used to import other kinds of XML schemas. WSDL Import should only import others WSDL's. This check is to ensure compatibility with WS interoperability basic profile 1. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLImportOnlyPrecededByDocCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLImportOnlyPrecededByDocCheck</name>
+		<internalKey>WSDLImportOnlyPrecededByDocCheck</internalKey>
+		<description>All WSDL import elements must only be preceded by WSDL documentation element in a WSDL description. This check is to ensure compatibility with WS interoperability basic profile 1.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLImportLocationNotEmptyCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLImportLocationNotEmptyCheck</name>
+		<internalKey>WSDLImportLocationNotEmptyCheck</internalKey>
+		<description>A DESCRIPTION MUST specify a non-empty location attribute on the wsdl:import element.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLImportNoRelativeURIInNSCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLImportNoRelativeURIInNSCheck</name>
+		<internalKey>WSDLImportNoRelativeURIInNSCheck</internalKey>
+		<description>The namespace attribute of the wsdl:import must not be a relative URI. The URI should be a absolute URI as per URI standards. This check is to ensure compatibility with WS interoperability basic profile 1.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLFileRootDefinitionsCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLFileRootDefinitionsCheck</name>
+		<internalKey>WSDLFileRootDefinitionsCheck</internalKey>
+		<description>Every wsdl should import the wsdl file which has definitions as a root node in location of wsdl:import. This assertion assumes that inputDir should contains AIAMetaData directory in it.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLTargetNamespaceMatchingCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLTargetNamespaceMatchingCheck</name>
+		<internalKey>WSDLTargetNamespaceMatchingCheck</internalKey>
+		<description>Every wsdl MUST not import the wsdl which has different targetNamespace in definitions. This assertion assumes that inputDir should contains AIAMetaData directory in it.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLTypesOnlyPrecededByDocAndImportCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLTypesOnlyPrecededByDocAndImportCheck</name>
+		<internalKey>WSDLTypesOnlyPrecededByDocAndImportCheck</internalKey>
+		<description>All WSDL types elements must only be preceded by WSDL documentation element or wsdl import in a WSDL description. This check is to ensure compatibility with WS interoperability basic profile 1.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLImportsOnlyInsideDefinitionCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLImportsOnlyInsideDefinitionCheck</name>
+		<internalKey>WSDLImportsOnlyInsideDefinitionCheck</internalKey>
+		<description>A DESCRIPTION MUST use the WSDL Schema 'import' statement only within the wsdl:definition element of the types section.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.SchemaNodeOnlyInsideWsdlTypesCheck</key>
+		<severity>MAJOR</severity>
+		<name>SchemaNodeOnlyInsideWsdlTypesCheck</name>
+		<internalKey>SchemaNodeOnlyInsideWsdlTypesCheck</internalKey>
+		<description>A DESCRIPTION MUST use the XML Schema element only within the xsd:types element of the types section.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.SchemaImportsOnlyInsideSchemaCheck</key>
+		<severity>MAJOR</severity>
+		<name>SchemaImportsOnlyInsideSchemaCheck</name>
+		<internalKey>SchemaImportsOnlyInsideSchemaCheck</internalKey>
+		<description>A DESCRIPTION MUST use the XML Schema 'import' statement only within the xsd:schema element of the types section.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.SchemaImportUsedforXSDOnlyCheck</key>
+		<severity>MAJOR</severity>
+		<name>SchemaImportUsedforXSDOnlyCheck</name>
+		<internalKey>SchemaImportUsedforXSDOnlyCheck</internalKey>
+		<description>WSDL import element must not be used to import other kinds of XML schemas. WSDL Import should only import others WSDL's. This check is to ensure compatibility with WS interoperability basic profile 1. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.SchemaTargetNamespaceExistCheck</key>
+		<severity>MAJOR</severity>
+		<name>SchemaTargetNamespaceExistCheck</name>
+		<internalKey>SchemaTargetNamespaceExistCheck</internalKey>
+		<description>All xsd:schema elements contained in a wsdl:types element of a DESCRIPTION MUST have a targetNamespace attribute with a valid and non-null value, UNLESS the xsd:schema element has xsd:import and/or xsd:annotation as its only child element(s). </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.SchemaXSDFileRootSchemaCheck</key>
+		<severity>MAJOR</severity>
+		<name>SchemaXSDFileRootSchemaCheck</name>
+		<internalKey>SchemaXSDFileRootSchemaCheck</internalKey>
+		<description>Every xsd file should import the xsd file which has schema as a root node in location of xsd:import. This assertion assumes that inputDir should contains AIAMetaData directory in it.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.SchemaTargetNamespaceMatchingCheck</key>
+		<severity>MAJOR</severity>
+		<name>SchemaTargetNamespaceMatchingCheck</name>
+		<internalKey>SchemaTargetNamespaceMatchingCheck</internalKey>
+		<description>Every wsdl MUST not import the wsdl which has different targetNamespace in definitions. This assertion assumes that inputDir should contains AIAMetaData directory in it.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLPartMustNotUseElementAndTypeCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLPartMustNotUseElementAndTypeCheck</name>
+		<internalKey>WSDLPartMustNotUseElementAndTypeCheck</internalKey>
+		<description>A wsdl:message in a DESCRIPTION MUST NOT specify both type and element attributes on the same wsdl:part. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLOperationMustHaveInputCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLOperationMustHaveInputCheck</name>
+		<internalKey>WSDLOperationMustHaveInputCheck</internalKey>
+		<description>A DESCRIPTION MUST NOT use Solicit-Response and Notification type operations in a wsdl:portType definition. i.e. output message should always be after the input message.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.WSDLOperationNameMustBeUniqueCheck</key>
+		<severity>MAJOR</severity>
+		<name>WSDLOperationNameMustBeUniqueCheck</name>
+		<internalKey>WSDLOperationNameMustBeUniqueCheck</internalKey>
+		<description>A wsdl:portType in a DESCRIPTION MUST have operations with distinct values for their name attributes ( overloading)</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSWSDLLocationInCompositeCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSWSDLLocationInCompositeCheck</name>
+		<internalKey>ABCSWSDLLocationInCompositeCheck</internalKey>
+		<description>AIA service composite.xml should refer ABCS Interface wsdls from this location:oramds:/apps/AIAMetaData/AIAComponents/ApplicationConnectorServiceLibrary/&lt;Application_Name&gt;/&lt;Version&gt;/&lt;ServiceType&gt;. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSWSDLLocationInComponentCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSWSDLLocationInComponentCheck</name>
+		<internalKey>ABCSWSDLLocationInComponentCheck</internalKey>
+		<description>AIA service composite.xml should refer ABCS wsdls from this location:oramds:/apps/AIAMetaData/AIAComponents/ApplicationConnectorServiceLibrary/&lt;Application_Name&gt;/&lt;Version&gt;/&lt;ServiceType&gt;. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFWSDLLocationInCompositeCheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBFWSDLLocationInCompositeCheck</name>
+		<internalKey>EBFWSDLLocationInCompositeCheck</internalKey>
+		<description>AIA service composite.xml should refer EBF Interface wsdls from this location:oramds:/apps/AIAMetaData/AIAComponents/AIAComponents/BusinessProcessServiceLibrary/EBF/((V)[0-9])*</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFWSDLLocationInComponentCheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBFWSDLLocationInComponentCheck</name>
+		<internalKey>EBFWSDLLocationInComponentCheck</internalKey>
+		<description>AIA service composite.xml should refer EBF wsdls from this location:oramds:/apps/AIAMetaData/AIAComponents/BusinessProcessServiceLibrary/EBF/((V)[0-9])*</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CBPWSDLLocationInCompositeCheck</key>
+		<severity>CRITICAL</severity>
+		<name>CBPWSDLLocationInCompositeCheck</name>
+		<internalKey>CBPWSDLLocationInCompositeCheck</internalKey>
+		<description>AIA service composite.xml should refer CBP Interface wsdls from this location oramds:/apps/AIAMetaData/AIAComponents/BusinessProcessServiceLibrary/.*</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CBPWSDLLocationInComponentCheck</key>
+		<severity>CRITICAL</severity>
+		<name>CBPWSDLLocationInComponentCheck</name>
+		<internalKey>CBPWSDLLocationInComponentCheck</internalKey>
+		<description>AIA service composite.xml should refer CBP wsdls from this location: oramds:/apps/AIAMetaData/AIAComponents/BusinessProcessServiceLibrary/.*</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSExtensionLocationInCompositeCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSExtensionLocationInCompositeCheck</name>
+		<internalKey>ABCSExtensionLocationInCompositeCheck</internalKey>
+		<description>AIA services should have extension wsdls with proper name.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSExtensionLocationInComponentCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSExtensionLocationInComponentCheck</name>
+		<internalKey>ABCSExtensionLocationInComponentCheck</internalKey>
+		<description>AIA services should have extension wsdls with proper name.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBSWSDLLocationInCompositeCheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBSWSDLLocationInCompositeCheck</name>
+		<internalKey>EBSWSDLLocationInCompositeCheck</internalKey>
+		<description>AIA Mediator service composite.xml should refer Mediator wsdls from this location: oramds:/apps/AIAMetaData/AIAComponents/EnterpriseBusinessServiceLibrary/.* </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBSWSDLLocationInComponentCheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBSWSDLLocationInComponentCheck</name>
+		<internalKey>EBSWSDLLocationInComponentCheck</internalKey>
+		<description>AIA Mediator service composite.xml should refer Mediator wsdls from this location: oramds:/apps/AIAMetaData/AIAComponents/EnterpriseBusinessServiceLibrary/.* </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSABOReferenceLocationCheck</key>
+		<severity>MAJOR</severity>
+		<name>ABCSABOReferenceLocationCheck</name>
+		<internalKey>ABCSABOReferenceLocationCheck</internalKey>
+		<description>AIA services should refer application objects (ABO) from this location:oramds:/apps/AIAMetaData/AIAComponents/ApplicationObjectLibrary/&lt;Application Name&gt;/&lt;Version Number&gt;/schemas </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSEBOReferenceLocationCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSEBOReferenceLocationCheck</name>
+		<internalKey>ABCSEBOReferenceLocationCheck</internalKey>
+		<description>AIA services should refer enterprise object (EBO) from this location:oramds:/apps/AIAMetaData/AIAComponents/EnterpriseObjectLibrary</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSEHRefLocationInCompositeCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSEHRefLocationInCompositeCheck</name>
+		<internalKey>ABCSEHRefLocationInCompositeCheck</internalKey>
+		<description>AIA services should, either refer EH wsdls from this location:oramds:/apps/AIAMetaData/AIAComponents/InfrastructureServiceLibrary/V1/wsdls/ or invoke the 'process' java function from an embedded java activity for error handling</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSEHRefLocationInComponentCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSEHRefLocationInComponentCheck</name>
+		<internalKey>ABCSEHRefLocationInComponentCheck</internalKey>
+		<description>AIA services should, either refer EH wsdls from this location:oramds:/apps/AIAMetaData/AIAComponents/InfrastructureServiceLibrary/V1/wsdls/ or invoke the 'process' java function from an embedded java activity for error handling</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSNoEBFPartnerLinkCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSNoEBFPartnerLinkCheck</name>
+		<internalKey>ABCSNoEBFPartnerLinkCheck</internalKey>
+		<description>ABCS can not have EBF as partner link, If ABCS needs to communicate that should be throw Mediator. EBF can not use ABM, ant it will operate only on EBM's</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSNoEBFReferenceInCompositeCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSNoEBFReferenceInCompositeCheck</name>
+		<internalKey>ABCSNoEBFReferenceInCompositeCheck</internalKey>
+		<description>ABCS composite.xml should not have any direct reference to EBF process</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSNoEBFReferenceInComponentCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSNoEBFReferenceInComponentCheck</name>
+		<internalKey>ABCSNoEBFReferenceInComponentCheck</internalKey>
+		<description>ABCS composit should not have any direct reference to EBF process</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFNoABCSPartnerLinkCheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBFNoABCSPartnerLinkCheck</name>
+		<internalKey>EBFNoABCSPartnerLinkCheck</internalKey>
+		<description>EBF can not have ABCS as partner link, If EBF needs to communicate that should be throw Mediator. EBF can not use ABM, ant it will operate only on EBM's</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFNoABCSReferenceInCompositeCheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBFNoABCSReferenceInCompositeCheck</name>
+		<internalKey>EBFNoABCSReferenceInCompositeCheck</internalKey>
+		<description>EBF composit should not have any direct reference to ABCS process.EBF can communicate to ABCS via Mediator routing process.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFNoABCSReferenceInComponentCheck</key>
+		<severity>CRITICAL</severity>
+		<name>EBFNoABCSReferenceInComponentCheck</name>
+		<internalKey>EBFNoABCSReferenceInComponentCheck</internalKey>
+		<description>EBF composit should not have any direct reference to ABCS process.EBF can communicate to ABCS via Mediator routing process.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBSRoutingServiceInCompositeCheck</key>
+		<severity>MAJOR</severity>
+		<name>EBSRoutingServiceInCompositeCheck</name>
+		<internalKey>EBSRoutingServiceInCompositeCheck</internalKey>
+		<description>AIA service composite.xml should refer Prov ABCS wsdls from this location:oramds:/apps/AIAMetaData/AIAComponents/ApplicationConnectorServiceLibrary/&lt;Application_Name&gt;/&lt;Version&gt;/&lt;ServiceType&gt;. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBSRoutingServiceInComponentCheck</key>
+		<severity>MAJOR</severity>
+		<name>EBSRoutingServiceInComponentCheck</name>
+		<internalKey>EBSRoutingServiceInComponentCheck</internalKey>
+		<description>AIA Mediator service componentType should refer Prov ABCS wsdls from this location:oramds:/apps/AIAMetaData/AIAComponents/ApplicationConnectorServiceLibrary/&lt;Application_Name&gt;/&lt;Version&gt;/&lt;ServiceType&gt;. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSInvocationEBSCountCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSInvocationEBSCountCheck</name>
+		<internalKey>ABCSInvocationEBSCountCheck</internalKey>
+		<description>AIA ABCS services should refer at max only one Mediator, If complex object used message need to route via corresponding complex Mediator then via EBF to sub EBS Process </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSEBOUsageCountCheck</key>
+		<severity>CRITICAL</severity>
+		<name>ABCSEBOUsageCountCheck</name>
+		<internalKey>ABCSEBOUsageCountCheck</internalKey>
+		<description>AIA services (ProABCS) should refer enterprise object (EBO) from this location:oramds:/apps/AIAMetaData/AIAComponents/EnterpriseObjectLibrary at max only once from service wsdl</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ABCSExtTargetNameSpacesCheck</key>
+		<severity>MAJOR</severity>
+		<name>ABCSExtTargetNameSpacesCheck</name>
+		<internalKey>ABCSExtTargetNameSpacesCheck</internalKey>
+		<description>All targetNameSpaces for ABCS Extension processes should follow the standard pattern defined in AIA Naming Standards guide :: 'http://xmlns.oracle.com/ABCSImpl/[Short Application Name]/(Core|(Industry/IndustryName))/ServiceNameExtension/version(optional)'. Note: 'ServiceName' in the above mentioned targetNameSpace should also be according to standards ({ServiceOperation}{AppName}{Industry(if not core process)}{ServiceType}). e.g., (CreateCustomerPartyList)(BRM)(Communications)(ProvABCSImpl), (CreateCustomerPartyList)(Ebiz)(ProvABCSImpl). TargetNameSpace example:  'http://xmlns.oracle.com/ABCSImpl/Siebel/Industry/Comms/SyncItemCompositionListSiebelCommsProvABCSImplExtension/V1'.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TXNEnableInAsyncDRABCSCheck</key>
+		<severity>MAJOR</severity>
+		<name>TXNEnableInAsyncDRABCSCheck</name>
+		<internalKey>TXNEnableInAsyncDRABCSCheck</internalKey>
+		<description>This check is for all ABCSImpl that follow Async Delayed Response MEP. Process level configurations are required to ensure the instance rollback and bypassing the dehydration store. Set configurations level property 'oneWayDeliveryPolicy' to 'sync' in composite.xml</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.SyncNotInvokeAsyncService</key>
+		<severity>CRITICAL</severity>
+		<name>SyncNotInvokeAsyncService</name>
+		<internalKey>SyncNotInvokeAsyncService</internalKey>
+		<description>Synchronous flows should not invoke asynchronous services</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.SyncNotUseBreakpointActivities</key>
+		<severity>CRITICAL</severity>
+		<name>SyncNotUseBreakpointActivities</name>
+		<internalKey>SyncNotUseBreakpointActivities</internalKey>
+		<description>Synch process designed with No mid process breakpoint activities (Receive, onMessage, onAlarm, Wait) And, No non-idempotent invoke And, No non-blocking invoke).</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ReqABCSReferenceElementCommentCheck</key>
+		<severity>BLOCKER</severity>
+		<name>ReqABCSReferenceElementCommentCheck</name>
+		<internalKey>ReqABCSReferenceElementCommentCheck</internalKey>
+		<description>All Service element in the composite.xml of Prov ABCS should be annotated according to the Section 11. Annotating Composites in Developer Guide .All the reference node [/sca:composite/sca:reference] in the composite.xml should have the comment node whose content starts with &lt;svcdoc:AIA&gt;&gt;</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ReqABCSServiceElementCommentCheck</key>
+		<severity>BLOCKER</severity>
+		<name>ReqABCSServiceElementCommentCheck</name>
+		<internalKey>ReqABCSServiceElementCommentCheck</internalKey>
+		<description>Service element in the composite.xml of Prov ABCS should be annotated according to the Section 11. Annotating Composites in Developer Guide. All the service element [/sca:composite/sca:service] in the composite.xml should have the comment node whose content starts with &lt;svcdoc:AIA&gt;&gt;</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ReqABCSServiceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>ReqABCSServiceElementAnnotationCheck</name>
+		<internalKey>ReqABCSServiceElementAnnotationCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node  </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ReqABCSServiceAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>ReqABCSServiceAnnotationValuesCheck</name>
+		<internalKey>ReqABCSServiceAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines. Developer should specify the valid value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node. Note: ApplicationName,BaseVersion,ServiceOperation should be the same as given in the namespace of the wsdl for the service. ArtifactType should be hard coded to 'RequesterABCSImplementation' and DevelopedBy can have any alphanumeric character.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ReqABCSReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>ReqABCSReferenceElementAnnotationCheck</name>
+		<internalKey>ReqABCSReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ProvABCSReferenceElementCommentCheck</key>
+		<severity>BLOCKER</severity>
+		<name>ProvABCSReferenceElementCommentCheck</name>
+		<internalKey>ProvABCSReferenceElementCommentCheck</internalKey>
+		<description>All Service element in the composite.xml of Prov ABCS should be annotated according to the Section 11. Annotating Composites in Developer Guide.All the reference node [/sca:composite/sca:reference] in the composite.xml should have the comment node whose content starts with &lt;svcdoc:AIA&gt;&gt;</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ProvABCSServiceElementCommentCheck</key>
+		<severity>BLOCKER</severity>
+		<name>ProvABCSServiceElementCommentCheck</name>
+		<internalKey>ProvABCSServiceElementCommentCheck</internalKey>
+		<description>Service element in the composite.xml of Prov ABCS should be annotated according to the Section 11. Annotating Composites in Developer Guide. All the service element [/sca:composite/sca:service] in the composite.xml should have the comment node whose content starts with &lt;svcdoc:AIA&gt;&gt;</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ProvABCSServiceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>ProvABCSServiceElementAnnotationCheck</name>
+		<internalKey>ProvABCSServiceElementAnnotationCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node.Children nodes of InterfaceDetail element such as ServiceName, Namesapce, ArtifactType, ServiceOperation/name also should be filled user </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ProvABCSServiceAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>ProvABCSServiceAnnotationValuesCheck</name>
+		<internalKey>ProvABCSServiceAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines. Developer should specify the value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node. ServiceName, Namesapce, ArtifactType, ServiceOperation/name should be populated for InterfaceDetail  node. Note: ApplicationName,BaseVersion,ServiceOperation should be the same as given in the namespace of the wsdl for the service. ArtifactType should be hard coded to 'ProviderABCSImplementation' and DevelopedBy can have any alphanumeric character. </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ProvABCSReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>ProvABCSReferenceElementAnnotationCheck</name>
+		<internalKey>ProvABCSReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFReferenceElementCommentCheck</key>
+		<severity>BLOCKER</severity>
+		<name>EBFReferenceElementCommentCheck</name>
+		<internalKey>EBFReferenceElementCommentCheck</internalKey>
+		<description>All Service element in the composite.xml of Prov ABCS should be annotated according to the Section 11. Annotating Composites in Developer Guide.All the reference node [/sca:composite/sca:reference] in the composite.xml should have the comment node whose content starts with &lt;svcdoc:AIA&gt;&gt;</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFServiceElementCommentCheck</key>
+		<severity>BLOCKER</severity>
+		<name>EBFServiceElementCommentCheck</name>
+		<internalKey>EBFServiceElementCommentCheck</internalKey>
+		<description>Service element in the composite.xml of Prov ABCS should be annotated according to the Section 11. Annotating Composites in Developer Guide. All the service element [/sca:composite/sca:service] in the composite.xml should have the comment node whose content starts with &lt;svcdoc:AIA&gt;&gt;</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFServiceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>EBFServiceElementAnnotationCheck</name>
+		<internalKey>EBFServiceElementAnnotationCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node.Children nodes of InterfaceDetail element such as ServiceName, Namesapce, ArtifactType, ServiceOperation/name also should be filled user </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFServiceAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>EBFServiceAnnotationValuesCheck</name>
+		<internalKey>EBFServiceAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node. ServiceName, Namesapce, ArtifactType, ServiceOperation/name should be populated for InterfaceDetail  node. ServiceName, Namesapce, ArtifactType, ServiceOperation/name should be populated for InterfaceDetail node. Note: ApplicationName,BaseVersion,ServiceOperation should be the same as given in the namespace of the wsdl for the service. ArtifactType should be hard coded to 'EnterpriseBusinessFlow' and DevelopedBy can have any alphanumeric character.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>EBFReferenceElementAnnotationCheck</name>
+		<internalKey>EBFReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.EBFReferenceEBSAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>EBFReferenceEBSAnnotationValuesCheck</name>
+		<internalKey>EBFReferenceEBSAnnotationValuesCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CBPReferenceElementCommentCheck</key>
+		<severity>BLOCKER</severity>
+		<name>CBPReferenceElementCommentCheck</name>
+		<internalKey>CBPReferenceElementCommentCheck</internalKey>
+		<description>All Service element in the composite.xml of CBP should be annotated according to the Section 11. Annotating Composites in Developer Guide.All the reference node [/sca:composite/sca:reference] in the composite.xml should have the comment node whose content starts with &lt;svcdoc:AIA&gt;&gt;</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CBPServiceElementCommentCheck</key>
+		<severity>BLOCKER</severity>
+		<name>CBPServiceElementCommentCheck</name>
+		<internalKey>CBPServiceElementCommentCheck</internalKey>
+		<description>Service element in the composite.xml of CBP should be annotated according to the Section 11. Annotating Composites in Developer Guide. All the service element [/sca:composite/sca:service] in the composite.xml should have the comment node whose content starts with &lt;svcdoc:AIA&gt;&gt;</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CBPServiceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>CBPServiceElementAnnotationCheck</name>
+		<internalKey>CBPServiceElementAnnotationCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node.Children nodes of InterfaceDetail element such as ServiceName, Namesapce, ArtifactType, ServiceOperation/name also should be filled user </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CBPServiceAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>CBPServiceAnnotationValuesCheck</name>
+		<internalKey>CBPServiceAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node.Children nodes of InterfaceDetail element such as ServiceName, Namesapce, ArtifactType, ServiceOperation/name also should be filled user </description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.CBPReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>CBPReferenceElementAnnotationCheck</name>
+		<internalKey>CBPReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TXNEnableInASyncDelayedProvABCSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>TXNEnableInASyncDelayedProvABCSCheck</name>
+		<internalKey>TXNEnableInASyncDelayedProvABCSCheck</internalKey>
+		<description>This check is for Async Delayed Response Provider ABCSImpl Process level configurations are required to ensure the instance rollback and bypassing the dehydration store. Set configurations level property 'oneWayDeliveryPolicy' to 'sync' in composite.xml</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TXNEnableInASyncDelayedProvABCSCheck1</key>
+		<severity>CRITICAL</severity>
+		<name>TXNEnableInASyncDelayedProvABCSCheck1</name>
+		<internalKey>TXNEnableInASyncDelayedProvABCSCheck1</internalKey>
+		<description>This check is for Async Delayed Response Provider ABCSImpl should have to participate global transaction.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TXNEnableInFireForgetProvABCSCheck</key>
+		<severity>CRITICAL</severity>
+		<name>TXNEnableInFireForgetProvABCSCheck</name>
+		<internalKey>TXNEnableInFireForgetProvABCSCheck</internalKey>
+		<description>This check is for Fire and Forget Provider ABCSImpl Process level configurations are required to ensure the instance rollback and bypassing the dehydration store. Set configurations level property 'oneWayDeliveryPolicy' to 'sync' in composite.xml</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TXNEnableInFireForgetProvABCSCheck1</key>
+		<severity>CRITICAL</severity>
+		<name>TXNEnableInFireForgetProvABCSCheck1</name>
+		<internalKey>TXNEnableInFireForgetProvABCSCheck1</internalKey>
+		<description>This check is for Fire and Forget Provider ABCSImpl should have to participate global transaction.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TransportAdapterServiceElementCommentCheck</key>
+		<severity>BLOCKER</severity>
+		<name>TransportAdapterServiceElementCommentCheck</name>
+		<internalKey>TransportAdapterServiceElementCommentCheck</internalKey>
+		<description>Service element in the composite.xml of every AIA Composite should be annotated according to the Section 11. Annotating Composites in Developer Guide. All the service element [/sca:composite/sca:service] in the composite.xml should have the comment node whose content starts with &lt;svcdoc:AIA&gt;&gt;</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TransportAdapterReferenceElementCommentCheck</key>
+		<severity>BLOCKER</severity>
+		<name>TransportAdapterReferenceElementCommentCheck</name>
+		<internalKey>TransportAdapterReferenceElementCommentCheck</internalKey>
+		<description>Service element in the composite.xml of every AIA Composite should be annotated according to the Section 11. Annotating Composites in Developer Guide. All the service element [/sca:composite/sca:service] in the composite.xml should have the comment node whose content starts with &lt;svcdoc:AIA&gt;&gt;</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.JMSProducerRefTransElementAnnotationCheck</key>
+		<severity>CRITICAL</severity>
+		<name>JMSProducerRefTransElementAnnotationCheck</name>
+		<internalKey>JMSProducerRefTransElementAnnotationCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.JMSProducerSerImplAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>JMSProducerSerImplAnnotationValuesCheck</name>
+		<internalKey>JMSProducerSerImplAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines. Developer should specify the valid value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node. Note: ApplicationName,BaseVersion,ServiceOperation should be the same as given in the namespace of the wsdl for the service. ArtifactType should be hard coded to 'JMSProducer' and DevelopedBy can have any alphanumeric character.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.JMSProducerRefTransAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>JMSProducerRefTransAnnotationValuesCheck</name>
+		<internalKey>JMSProducerRefTransAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.JMSProducerReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>JMSProducerReferenceElementAnnotationCheck</name>
+		<internalKey>JMSProducerReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.JMSConsumerSerTransElementAnnotationCheck</key>
+		<severity>CRITICAL</severity>
+		<name>JMSConsumerSerTransElementAnnotationCheck</name>
+		<internalKey>JMSConsumerSerTransElementAnnotationCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.JMSConsumerSerImplAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>JMSConsumerSerImplAnnotationValuesCheck</name>
+		<internalKey>JMSConsumerSerImplAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines. Developer should specify the valid value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node. Note: ApplicationName,BaseVersion,ServiceOperation should be the same as given in the namespace of the wsdl for the service. ArtifactType should be hard coded to 'JMSProducer' and DevelopedBy can have any alphanumeric character.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.JMSConsumerSerTransAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>JMSConsumerSerTransAnnotationValuesCheck</name>
+		<internalKey>JMSConsumerSerTransAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.JMSConsumerReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>JMSConsumerReferenceElementAnnotationCheck</name>
+		<internalKey>JMSConsumerReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.DBAdapterSerImplAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>DBAdapterSerImplAnnotationValuesCheck</name>
+		<internalKey>DBAdapterSerImplAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines. Developer should specify the valid value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node. Note: ApplicationName,BaseVersion,ServiceOperation should be the same as given in the namespace of the wsdl for the service. ArtifactType should be hard coded to 'RequesterABCSImplementation' and DevelopedBy can have any alphanumeric character.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.DBAdapterReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>DBAdapterReferenceElementAnnotationCheck</name>
+		<internalKey>DBAdapterReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AQProducerRefTransElementAnnotationCheck</key>
+		<severity>CRITICAL</severity>
+		<name>AQProducerRefTransElementAnnotationCheck</name>
+		<internalKey>AQProducerRefTransElementAnnotationCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AQProducerSerImplAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>AQProducerSerImplAnnotationValuesCheck</name>
+		<internalKey>AQProducerSerImplAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines. Developer should specify the valid value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node. Note: ApplicationName,BaseVersion,ServiceOperation should be the same as given in the namespace of the wsdl for the service. ArtifactType should be hard coded to 'AQProducer' and DevelopedBy can have any alphanumeric character.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AQProducerRefTransAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>AQProducerRefTransAnnotationValuesCheck</name>
+		<internalKey>AQProducerRefTransAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AQProducerReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>AQProducerReferenceElementAnnotationCheck</name>
+		<internalKey>AQProducerReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AQConsumerSerTransElementAnnotationCheck</key>
+		<severity>CRITICAL</severity>
+		<name>AQConsumerSerTransElementAnnotationCheck</name>
+		<internalKey>AQConsumerSerTransElementAnnotationCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AQConsumerSerImplAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>AQConsumerSerImplAnnotationValuesCheck</name>
+		<internalKey>AQConsumerSerImplAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines. Developer should specify the valid value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node. Note: ApplicationName,BaseVersion,ServiceOperation should be the same as given in the namespace of the wsdl for the service. ArtifactType should be hard coded to 'AQProducer' and DevelopedBy can have any alphanumeric character.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AQConsumerSerTransAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>AQConsumerSerTransAnnotationValuesCheck</name>
+		<internalKey>AQConsumerSerTransAnnotationValuesCheck</internalKey>
+		<description>All Service elements in the composite.xml should be annotated according to the annotation guidelines.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.AQConsumerReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>AQConsumerReferenceElementAnnotationCheck</name>
+		<internalKey>AQConsumerReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.FILEReaderSerImplAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>FILEReaderSerImplAnnotationValuesCheck</name>
+		<internalKey>FILEReaderSerImplAnnotationValuesCheck</internalKey>
+		<description>All File Reader Service elements in the composite.xml should be annotated according to the annotation guidelines. Developer should specify the valid value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node. Note: ApplicationName,BaseVersion,ServiceOperation should be the same as given in the namespace of the wsdl for the service. ArtifactType should be hard coded to 'AQProducer' and DevelopedBy can have any alphanumeric character.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.FILEReaderSerTransAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>FILEReaderSerTransAnnotationValuesCheck</name>
+		<internalKey>FILEReaderSerTransAnnotationValuesCheck</internalKey>
+		<description>All File Reader Service elements in the composite.xml should be annotated according to the annotation guidelines.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.FILEReaderReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>FILEReaderReferenceElementAnnotationCheck</name>
+		<internalKey>FILEReaderReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.FILEWriterSerImplAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>FILEWriterSerImplAnnotationValuesCheck</name>
+		<internalKey>FILEWriterSerImplAnnotationValuesCheck</internalKey>
+		<description>All File Reader Service elements in the composite.xml should be annotated according to the annotation guidelines. Developer should specify the valid value for ApplicationName,BaseVersion,DevelopedBy,OracleCertified,ArtifactType,and ServiceOperation/Name elements inside the ImplementationDetails node. Note: ApplicationName,BaseVersion,ServiceOperation should be the same as given in the namespace of the wsdl for the service. ArtifactType should be hard coded to 'AQProducer' and DevelopedBy can have any alphanumeric character.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.FILEWriterRefTransAnnotationValuesCheck</key>
+		<severity>MAJOR</severity>
+		<name>FILEWriterRefTransAnnotationValuesCheck</name>
+		<internalKey>FILEWriterRefTransAnnotationValuesCheck</internalKey>
+		<description>All File Reader Service elements in the composite.xml should be annotated according to the annotation guidelines.</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.FILEWriterReferenceElementAnnotationCheck</key>
+		<severity>MAJOR</severity>
+		<name>FILEWriterReferenceElementAnnotationCheck</name>
+		<internalKey>FILEWriterReferenceElementAnnotationCheck</internalKey>
+		<description>All reference elements in the composite.xml should be annotated according to the Section 11. Annotating Composites in Developer Guide. Developer should specify the value for ArtifactType,and ServiceOperation/Name elements inside the svcdoc:Reference node</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.DVMLocationInDVMLookupCheck</key>
+		<severity>BLOCKER</severity>
+		<name>DVMLocationInDVMLookupCheck</name>
+		<internalKey>DVMLocationInDVMLookupCheck</internalKey>
+		<description>This assertion checks the dvm name in DVM lookup function. The dvm name is should be either e.g. 'oramds:/apps/AIAMetaData/dvm/[dvmname].dvm' or a variable e.g. $dvm_name</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.XREFLocationInXREFLookupCheck</key>
+		<severity>BLOCKER</severity>
+		<name>XREFLocationInXREFLookupCheck</name>
+		<internalKey>XREFLocationInXREFLookupCheck</internalKey>
+		<description>This assertion checks the Xref name in Xref lookup function. The Xref name is should be either e.g. 'oramds:/apps/AIAMetaData/xref/[XREFNAME].xref' or a variable e.g. $xref_name</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.XREFLocationInXREFPopulateXRefCheck</key>
+		<severity>BLOCKER</severity>
+		<name>XREFLocationInXREFPopulateXRefCheck</name>
+		<internalKey>XREFLocationInXREFPopulateXRefCheck</internalKey>
+		<description>This assertion checks the Xref name in Populate Xref function. The Xref name is should be either e.g. 'oramds:/apps/AIAMetaData/xref/[XREFNAME].xref' or a variable e.g. $xref_name</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.XSLLocationInXFormCheck</key>
+		<severity>BLOCKER</severity>
+		<name>XSLLocationInXFormCheck</name>
+		<internalKey>XSLLocationInXFormCheck</internalKey>
+		<description>This assertion checks against the transform activity processXSLT function usage should check that the XSL file should be used from {project dir}/xsl/</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.DVMCommonColumnUniqueValuesCheck</key>
+		<severity>CRITICAL</severity>
+		<name>DVMCommonColumnUniqueValuesCheck</name>
+		<internalKey>DVMCommonColumnUniqueValuesCheck</internalKey>
+		<description>The common column value in the DVM  should be unique across various rows in domain values mapping details</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.SessionPoolManagerReleaseUsageCheck</key>
+		<severity>CRITICAL</severity>
+		<name>SessionPoolManagerReleaseUsageCheck</name>
+		<internalKey>SessionPoolManagerReleaseUsageCheck</internalKey>
+		<description>All AIA Provider Siebel web services need to use Siebel Session pool Manager to interact with Siebel provider web services</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.JMSConsumerJMSMESSIDStampingCheck</key>
+		<severity>BLOCKER</severity>
+		<name>JMSConsumerJMSMESSIDStampingCheck</name>
+		<internalKey>JMSConsumerJMSMESSIDStampingCheck</internalKey>
+		<description> Check to ensure JMS consumers stamp JMSMESSAGEID to the message consumed before routing to the next service.[TO BE FIXED]</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.ResequencerGroupIDStampingCheck</key>
+		<severity>MAJOR</severity>
+		<name>ResequencerGroupIDStampingCheck</name>
+		<internalKey>ResequencerGroupIDStampingCheck</internalKey>
+		<description>Check to ensure each re-sequencer stamps the GroupID to every message before routing it to next service.[TO BE FIXED]</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TokenizedReferencesInCompositeCheck</key>
+		<severity>CRITICAL</severity>
+		<name>TokenizedReferencesInCompositeCheck</name>
+		<internalKey>TokenizedReferencesInCompositeCheck</internalKey>
+		<description>All the http urls which is pointing http server location should be tokenized with ${hostname} and ${port}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TokenizedReferencesInWSDLCheck</key>
+		<severity>CRITICAL</severity>
+		<name>TokenizedReferencesInWSDLCheck</name>
+		<internalKey>TokenizedReferencesInWSDLCheck</internalKey>
+		<description>All the http urls which is pointing http server location should be tokenized with ${hostname} and ${port}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TokenizedReferencesInXSLCheck</key>
+		<severity>CRITICAL</severity>
+		<name>TokenizedReferencesInXSLCheck</name>
+		<internalKey>TokenizedReferencesInXSLCheck</internalKey>
+		<description>All the http urls which is pointing http server location should be tokenized with ${hostname} and ${port}</description>
+		<status>READY</status>
+	</rule>
+	<rule>
+		<key>com.oracle.cci.TokenizedReferencesInBpelCheck</key>
+		<severity>CRITICAL</severity>
+		<name>TokenizedReferencesInBpelCheck</name>
+		<internalKey>TokenizedReferencesInBpelCheck</internalKey>
+		<description>All the http urls which is pointing http server location should be tokenized with ${hostname} and ${port}</description>
+		<status>READY</status>
+	</rule>
+</rules>

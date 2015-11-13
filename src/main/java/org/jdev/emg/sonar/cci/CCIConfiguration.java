@@ -83,6 +83,23 @@ public class CCIConfiguration implements ServerExtension, BatchExtension {
         checkCanRead(file, "cci executable");
         return file;
     }
+    
+    /**
+     * Gets the timeout (in seconds) to wait for ojaudit execution to complete, which may be the default value
+     * if not explicitly set.
+     * @return timeout in seconds
+     * @see CCIPlugin#CCI_TIMEOUT_SECS_KEY
+     */
+    public int getTimeoutSecs() {
+        checkKeyExists(CCIPlugin.CCI_TIMEOUT_SECS_KEY);
+        return settings.getInt(CCIPlugin.CCI_TIMEOUT_SECS_KEY);
+    }
+    
+    private void checkKeyExists(String key) {
+        if (!settings.hasKey(key) && !settings.hasDefaultValue(key)) {
+            throw new IllegalArgumentException(key + " not set in sonar-project.properties");
+        }
+    }
 
     /**
      * Check can read.

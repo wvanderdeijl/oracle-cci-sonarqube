@@ -46,6 +46,8 @@ import org.sonar.api.utils.command.CommandExecutor;
 public class CCISensor implements Sensor {
 
     private static final Logger LOG = LoggerFactory.getLogger(CCISensor.class);
+    
+    private static final Long MSECS_PER_SEC = 1000L;
 
     private final Checks<Object> checks;
     private final CCIConfiguration config;
@@ -99,7 +101,7 @@ public class CCISensor implements Sensor {
             cmd = command.toCommandLine();
             LOG.info("executing {}", cmd);
             CommandExecutor executor = CommandExecutor.create();
-            int exitCode = executor.execute(command, 10 * 1000);
+            int exitCode = executor.execute(command, config.getTimeoutSecs() * MSECS_PER_SEC);
             if (exitCode != 0) {
                 throw new IllegalStateException("The exit code was " + exitCode +
                                                 " when 0 was expected for command: " + command);

@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.sonar.api.Properties;
 import org.sonar.api.Property;
+import org.sonar.api.PropertyType;
 import org.sonar.api.SonarPlugin;
 import org.sonar.api.profiles.RulesProfile;
 
@@ -37,6 +38,12 @@ import org.sonar.api.profiles.RulesProfile;
                          project = true, 
                          module = true,
                          global = true),
+                @Property(key = CCIPlugin.CCI_TIMEOUT_SECS_KEY, 
+                          defaultValue = "300", name = "Timeout (secs)",
+                          description = "Maximum number of seconds to wait for ojaudit to complete", 
+                          project = true,
+                          global = true, 
+                          type = PropertyType.INTEGER),
                @Property(key = CCIPlugin.FILE_SUFFIXES_KEY, 
                          defaultValue = CCIPlugin.FILE_SUFFIXES_DEFVALUE,
                          name = "File suffixes", 
@@ -58,6 +65,8 @@ public class CCIPlugin extends SonarPlugin {
     public static final String FILE_SUFFIXES_KEY = "sonar.cci.file.suffixes";
     public static final String CCI_EXEC_KEY = "sonar.cci.executable";
     public static final String RULE_PREFIX = "com.oracle.cci.";
+    
+    public static final String CCI_TIMEOUT_SECS_KEY = "sonar.cci.timeoutsecs";
 
     /**
      * Returns list of extension classes for this plugin.

@@ -63,7 +63,8 @@ public class CCIResultsParser {
      * @param resourcePerspectives
      * @param context SensorContext where vioilations should be reported to
      */
-    public CCIResultsParser(Project project, RulesProfile profile, SensorContext context, ResourcePerspectives resourcePerspectives) {
+    public CCIResultsParser(Project project, RulesProfile profile, SensorContext context,
+                            ResourcePerspectives resourcePerspectives) {
         this.project = project;
         this.profile = profile;
         this.resourcePerspectives = resourcePerspectives;
@@ -104,22 +105,22 @@ public class CCIResultsParser {
     }
 
     private void processPolicyResults(List<ValidatorResult.PolicyResult> policyResultList) {
-        for(ValidatorResult.PolicyResult policyResult : policyResultList) {
+        for (ValidatorResult.PolicyResult policyResult : policyResultList) {
             processAssertionResults(policyResult.getAssertionResult());
         }
     }
-    
+
     /**
      * loop through the assertion results and proces only the composites.
      * @param assertionList
      */
     private void processAssertionResults(List<ValidatorResult.PolicyResult.AssertionResult> assertionList) {
-        for(ValidatorResult.PolicyResult.AssertionResult assertionResult : assertionList) {
-            
+        for (ValidatorResult.PolicyResult.AssertionResult assertionResult : assertionList) {
+
             // check if the result has Fail. that means that one of the composites where failed.
-            if("Fail".equalsIgnoreCase(assertionResult.getResult())) {
+            if ("Fail".equalsIgnoreCase(assertionResult.getResult())) {
                 Object compOrStack = assertionResult.getExecutionDetails().getCompositeOrStack();
-                if(compOrStack instanceof ArrayList ) {
+                if (compOrStack instanceof ArrayList) {
                     processComposite(assertionResult.getName(), (ArrayList)compOrStack);
                 }
             }
@@ -132,41 +133,58 @@ public class CCIResultsParser {
      * @param compOrStack
      */
     private void processComposite(String testname, ArrayList compOrStack) {
-        for(ValidatorResult.PolicyResult.AssertionResult.ExecutionDetails.Composite composite : (ArrayList<ValidatorResult.PolicyResult.AssertionResult.ExecutionDetails.Composite>) compOrStack) {
-            processExecution(composite.getExecution(), CCIPlugin.RULE_PREFIX + testname, basedir + File.separator, composite.getName());
+        for (ValidatorResult.PolicyResult.AssertionResult.ExecutionDetails.Composite composite :
+             (ArrayList<ValidatorResult.PolicyResult.AssertionResult.ExecutionDetails.Composite>)compOrStack) {
+            String baseDirectory = null;
+            if (this.basedir.endsWith(composite.getName())) {
+                baseDirectory = this.basedir.substring(0, this.basedir.length() - composite.getName().length());
+            } else {
+                baseDirectory = basedir + File.separator;
+            }
+            processExecution(composite.getExecution(), CCIPlugin.RULE_PREFIX + testname, baseDirectory,
+                             composite.getName());
         }
     }
 
     /**
-     * Loop through the executions and process 
+     * Loop through the executions and process
      * @param executionList
      * @param ruleKey
      * @param basedir
      */
-    private void processExecution( List<ValidatorResult.PolicyResult.AssertionResult.ExecutionDetails.Composite.Execution> executionList, String ruleKey, String basedir, String compositeName) {
-        for( ValidatorResult.PolicyResult.AssertionResult.ExecutionDetails.Composite.Execution execution : executionList) {
-            if(execution.getStatus() == 0) {
-                
-                String fileLocation = execution.getArtifactLocation().getValue().replace("${inputDir}", basedir).replace('\\', '/');
+    private void processExecution(List<ValidatorResult.PolicyResult.AssertionResult.ExecutionDetails.Composite.Execution> executionList,
+                                  String ruleKey, String basedir, String compositeName) {
+        for (ValidatorResult.PolicyResult.AssertionResult.ExecutionDetails.Composite.Execution execution :
+             executionList) {
+            if (execution.getStatus() == 0) {
+                String fileLocation = null;
+                if (execution.getArtifactLocation().getValue().startsWith("${inputDir}" + compositeName)) {
+                    fileLocation = basedir;
+                } else {
+                    fileLocation = basedir + compositeName + File.separator;
+                }
+                fileLocation =
+                        execution.getArtifactLocation().getValue().replace("${inputDir}", fileLocation).replace('\\',
+                                                                                                                '/');
+
                 LOG.debug("$$$ fileLocation: {}", fileLocation);
                 InputFile inputFile = map.get(fileLocation);
-                if(inputFile != null) {
+                if (inputFile != null) {
                     LOG.debug("inputFile: {}", inputFile.absolutePath());
-                              
+
                     Issuable issuable = resourcePerspectives.as(Issuable.class, inputFile);
-                    
-                    Integer line = execution.getArtifactLocation().getLine() != null ? execution.getArtifactLocation().getLine().intValue() : null;
+
+                    Integer line =
+                        execution.getArtifactLocation().getLine() != null ? execution.getArtifactLocation().getLine().intValue() :
+                        null;
                     LOG.debug("$$$ line: {}", line);
-                    
-                    if(issuable != null) {
-                        issuable.addIssue(issuable.newIssueBuilder()
-                                          .ruleKey(RuleKey.of(CCIPlugin.SONAR_REPOS_KEY,ruleKey))
-                                          .line(line)
-                                          .message(execution.getActualMessage())
-                                          .build());    
+
+                    if (issuable != null) {
+                        issuable.addIssue(issuable.newIssueBuilder().ruleKey(RuleKey.of(CCIPlugin.SONAR_REPOS_KEY,
+                                                                                        ruleKey)).line(line).message(execution.getActualMessage()).build());
                     }
                 }
-            }   
-        }    
+            }
+        }
     }
 }
